@@ -28,13 +28,19 @@ class API
                     }else{
                         $id = 0;
                     }
-                    $phones = $customer->getCustomer($id);
-                    $this->getResponse($phones);
+                    $customerPhones = $customer->getCustomer($id);
+                    $this->getResponse($customerPhones);
                 }
                 break;
-            
+            case 'POST':
+                if($this->endPoint[0] == 'customers'){
+                    $customer = new Customer();
+                    
+                    $postBody = file_get_contents("php://input");
+                    $customer->createCustomer($postBody);
+                }
             default:
-                # code...
+                http_response_code(405);
                 break;
         }
     }
