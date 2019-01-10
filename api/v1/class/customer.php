@@ -3,21 +3,22 @@
 class Customer
 {
 
+    private $db;
     private $data = array();
 
     public function __construct()
     {
-        $db = new DataBase();
-        $this->data = $db->getData();
+        $this->db = new DataBase();
+        $this->data = $this->db->getData();
     }
 
     public function getCustomer(int $id = 0){
         $arrData = array();
-        $customersData = $this->data[0]['customers'];
+        $customersData = $this->data;
         if($id>0){
             $key = array_search($id, array_column($customersData, 'id'));
-            if($key>0){
-                $customers[] = $this->data[0]['customers'][$key];
+            if(!empty($key)){
+                $customers[] = $this->data[$key];
             }else{
                 $customers = $customersData;
             }
@@ -40,6 +41,13 @@ class Customer
             $arrData[] = array('id'=>$id,'name'=>$name,'phones'=>$arrPhones);
         }
         return $arrData;
+    }
+
+    public function createCustomer(string $data)
+    {
+        if(!empty($data)){
+            $this->db->appendData($data);
+        }
     }
 }
 
