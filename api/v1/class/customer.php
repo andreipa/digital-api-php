@@ -28,6 +28,9 @@ class Customer
         foreach ($customers as $customer) {
             $arrPhones = array();
             $id = $customer['id'];
+            $token = $customer['token'];
+            $registered = $customer['registered'];
+            $updated = $customer['updated'];
             $name = $customer['name'];
             $phones = $customer['phones'];
             foreach ($phones as $phone) {
@@ -38,15 +41,44 @@ class Customer
                 }
             }
             $arrPhones = array_values(array_filter($arrPhones));
-            $arrData[] = array('id'=>$id,'name'=>$name,'phones'=>$arrPhones);
+            $arrData[] = array('id'=>$id,'token'=>$token,'registered'=>$registered,'updated'=>$updated,'name'=>$name,'phones'=>$arrPhones);
         }
         return $arrData;
     }
 
-    public function createCustomer(string $data)
+    public function createCustomer(string $newData)
     {
-        if(!empty($data)){
-            $this->db->appendData($data);
+        $customersData = $this->data;
+        $newData = json_decode($newData,true);
+        $newData['id'] = $this->db->getLastId($customersData);
+        $newData['registered'] = date('Y-m-d H:i:s');
+        $newData['updated'] = date('Y-m-d H:i:s');
+        $newData['token'] = uniqid();
+        array_push($customersData,$newData);
+        $jsonData = json_encode($customersData);
+        file_put_contents('data.json',$jsonData);
+    }
+
+    public function deleteCustomer(int $id = 0){
+        $customersData = $this->data;
+        if($id>0){
+            $key = array_search($id, array_column($customersData, 'id'));
+            array_splice($customersData,$key,1);
+            $jsonData = json_encode($customersData);
+            file_put_contents('data.json',$jsonData);
+        }
+    }
+
+    public function updateCustomer(int $id = 0, string $newData){
+        $customersData = $this->data;
+        if($id>0){
+            $key = array_search($id, array_column($customersData, 'id'));
+            $arrData = json_decode($newData,true);
+            $customersData[$key]['name'] = $arrData['name'];
+            $customersData[$key]['updated'] = date('Y-m-d H:i:s');
+            $customersData[$key]['phones'] = $arrData['phones'];
+            $jsonData = json_encode($customersData);
+            file_put_contents('data.json',$jsonData);
         }
     }
 }
