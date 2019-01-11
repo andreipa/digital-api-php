@@ -5,7 +5,6 @@ class API
     private $method = '';
     private $endPoint = '';
     private $args = '';
-    private $debug = '';
 
     public function __construct()
     {
@@ -88,9 +87,6 @@ class API
         echo json_encode($response);
     }
 
-    private function debug(){
-        var_dump($this->method,$this->endPoint,$this->args,$this->debug);
-    }
 }
 
 
