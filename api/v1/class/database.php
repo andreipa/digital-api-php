@@ -11,16 +11,7 @@ class DataBase
         return $arrData;
     }
 
-    public function appendData($newData){
-        $arrData = $this->getData();
-        $newData = json_decode($newData,true);
-        $newData['id'] = $this->getLastId($arrData);
-        array_push($arrData,$newData);
-        $jsonData = json_encode($arrData);
-        file_put_contents('data.json',$jsonData);
-    }
-
-    private function getLastId(array $arrData){
+    public function getLastId(array $arrData){
         $count = count($arrData);
         if($count > 0){
             $idx = $count - 1;
