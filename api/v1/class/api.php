@@ -28,8 +28,9 @@ class API
                     }else{
                         $id = 0;
                     }
-                    $customerPhones = $customer->getCustomer($id);
-                    $this->getResponse($customerPhones);
+                    $response = $customer->getCustomer($id);
+
+                    $this->getResponse(200,$response);
                 }
                 break;
             case 'POST':
@@ -38,15 +39,53 @@ class API
                     
                     $postBody = file_get_contents("php://input");
                     $customer->createCustomer($postBody);
+
+                    $response = array('message'=>'One or more new resources have been successfully created');
+                    $this->getResponse(201,$response);
                 }
+                break;
+            case 'PUT':
+                if($this->endPoint[0] == 'customers'){
+                    $customer = new Customer();
+                    if(isset($this->endPoint[1])){
+                        $id = $this->endPoint[1];
+                        $id = intval($id);
+                    }else{
+                        $id = 0;
+                    }
+                    
+                    $postBody = file_get_contents("php://input");
+                    $customer->updateCustomer($id,$postBody);
+
+                    $response = array('message'=>'One or more new resources have been successfully updated');
+                    $this->getResponse(200,$response);
+                }
+                break;
+            case 'DELETE':
+                if($this->endPoint[0] == 'customers'){
+                    $customer = new Customer();
+                    if(isset($this->endPoint[1])){
+                        $id = $this->endPoint[1];
+                        $id = intval($id);
+                    }else{
+                        $id = 0;
+                    }
+                    $customer->deleteCustomer($id);
+                    $response = array('message'=>'One or more new resources have been successfully deleted');
+                    $this->getResponse(200,$response);
+                }
+                break;
             default:
-                http_response_code(405);
+                $response = array('message'=>'Bad request');
+                $this->getResponse(400,$response);
                 break;
         }
     }
 
-    private function getResponse(array $res){
-        echo json_encode($res);
+    private function getResponse(int $httpCode,array $response){
+        
+        http_response_code($httpCode);
+        echo json_encode($response);
     }
 
     private function debug(){
