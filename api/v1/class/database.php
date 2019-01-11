@@ -5,7 +5,7 @@ class DataBase
 
     public function getData()
     {
-        $data = file_get_contents("data.json");
+        $data = file_get_contents("api/v1/data.json");
         $arrData = json_decode($data,true);
 
         return $arrData;
