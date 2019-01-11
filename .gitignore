@@ -8,6 +8,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.cmd
+
 
 # User-specific folders
 vendor/
@@ -331,3 +333,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+phpunit.cmd
+phpunit.xml
