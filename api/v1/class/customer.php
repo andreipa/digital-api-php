@@ -68,7 +68,7 @@ class Customer
         $newData['token'] = uniqid();
         array_push($customersData,$newData);
         $jsonData = json_encode($customersData);
-        file_put_contents("api/v1/data.json",$jsonData);
+        file_put_contents("data.json",$jsonData);
     }
 
     /**
@@ -83,7 +83,7 @@ class Customer
             $key = array_search($id, array_column($customersData, 'id'));
             array_splice($customersData,$key,1);
             $jsonData = json_encode($customersData);
-            file_put_contents("api/v1/data.json",$jsonData);
+            file_put_contents("data.json",$jsonData);
         }
     }
 
@@ -103,7 +103,7 @@ class Customer
             $customersData[$key]['updated'] = date('Y-m-d H:i:s');
             $customersData[$key]['phones'] = $arrData['phones'];
             $jsonData = json_encode($customersData);
-            file_put_contents("api/v1/data.json",$jsonData);
+            file_put_contents("data.json",$jsonData);
         }
     }
 }

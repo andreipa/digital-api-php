@@ -4,10 +4,12 @@ use PHPUnit\Framework\TestCase;
 
 class CustomerTest extends TestCase
 {
-    public function testIsFileJsonWritableOnCreation()
+    public function testOnlyAllowNumbers()
     {
-        $fileJson = "api/v1/data.json";
-        $this->assertFileIsWritable($fileJson);
+        $customer = new Customer();
+        $id = $customer->deleteCustomer(1);
+        $this->assertGreaterThanOrEqual(1,$id);
+
     }
 
 }

@@ -5,15 +5,6 @@ use PHPUnit\Framework\TestCase;
 class DatabaseTest extends TestCase
 {
 
-    public function testIsJsonFileExist()
-    {
-        $fileJson = "api/v1/data.json";
-        $this->assertFileExists($fileJson);
-    }
-
-    /**
-     * @depends testIsJsonFileExist
-     */
     public function testArrayIsNotEmpty()
     {
         $dataBase = new DataBase;
