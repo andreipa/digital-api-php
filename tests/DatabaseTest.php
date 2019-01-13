@@ -9,7 +9,6 @@ class DatabaseTest extends TestCase
     {
         $fileJson = "api/v1/data.json";
         $this->assertFileExists($fileJson);
-
     }
 
     /**
