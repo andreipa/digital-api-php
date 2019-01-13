@@ -52,6 +52,12 @@ class Customer
         return $arrData;
     }
 
+    /**
+     * Append record into the json file to simulate database
+     *
+     * @param string $newData
+     * @return void
+     */
     public function createCustomer(string $newData)
     {
         $customersData = $this->data;
@@ -65,6 +71,12 @@ class Customer
         file_put_contents("api/v1/data.json",$jsonData);
     }
 
+    /**
+     * Delete record from the json file if available
+     *
+     * @param integer $id
+     * @return void
+     */
     public function deleteCustomer(int $id = 0){
         $customersData = $this->data;
         if($id>0){
@@ -75,6 +87,13 @@ class Customer
         }
     }
 
+    /**
+     * Upate record on jason file
+     *
+     * @param integer $id
+     * @param string $newData
+     * @return void
+     */
     public function updateCustomer(int $id = 0, string $newData){
         $customersData = $this->data;
         if($id>0){
