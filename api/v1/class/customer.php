@@ -12,6 +12,12 @@ class Customer
         $this->data = $this->db->getData();
     }
 
+    /**
+     * List all customers if no ID is provided or only one customer
+     *
+     * @param integer $id
+     * @return array
+     */
     public function getCustomer(int $id = 0){
         $arrData = array();
         $customersData = $this->data;
